@@ -68,3 +68,26 @@ it passes, "CoolMS is installable" is a statement about one laptop.
 `coolms/core` and `coolms/ooxml` **independent**, so they do not get the
 same version number. `release-tools/release-set.py --report` computes it;
 do not hand-maintain the list.
+
+## Outcome, 2026-09-03
+
+All four are done, and the count of packages `coolms/*` serving at least one
+version on Packagist is **16 of 16**.
+
+| package | version |
+| --- | --- |
+| `coolms/ooxml` | `v1.0.0-alpha1` (independent numbering) |
+| `coolms/theme-bootstrap` | `v2.0.0-alpha3` |
+| `coolms/theme-default` | `v2.0.0-alpha3` |
+| `coolms/theme-admin` | `v2.0.0-alpha3` |
+
+⚠️ **alpha3 rather than alpha2, because alpha2 was broken.** Each theme's
+bundle class reaches `Config\Definition\ConfigurableInterface` through
+`AbstractBundle`, and `symfony/dependency-injection` carries `symfony/config`
+in `require-dev`. None of the three declared it, so all three installed
+perfectly and could not load their own bundle. Found by resolving each from
+its tag into an empty tree and checking every `use` in its own `src/` against
+the result -- before submission, which is why nothing had to be retracted.
+
+`theme-coolms-site` stayed out, as planned.
+

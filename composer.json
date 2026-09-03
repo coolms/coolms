@@ -16,7 +16,7 @@
         "coolms/entity-module": "^2.0@alpha",
         "coolms/rql": "^1.0",
         "coolms/rql-doctrine": "^1.0",
-        "coolms/theme-default": "^1.0",
+        "coolms/theme-default": "^2.0@alpha",
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.6",
@@ -43,18 +43,6 @@
         },
         "sort-packages": true
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/coolms/theme-default.git",
-            "no-api": true
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/coolms/theme-bootstrap.git",
-            "no-api": true
-        }
-    ],
     "autoload": {
         "psr-4": {
             "App\\": "src/"

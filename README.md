@@ -70,12 +70,12 @@ migrations".** That is correct, not broken: no published package ships a
 migration. Use `doctrine:schema:create`. The eight migrations in the CoolMS
 application tree build the application's tables, not the platform's.
 
-**3. The two theme packages are not on Packagist.** `coolms/theme-default`
-and `coolms/theme-bootstrap` are public GitHub repositories with no tags,
-so `composer.json` carries a `vcs` repository entry for each. They are marked `"no-api": true` on purpose: without it
-composer asks the GitHub API, gets rate-limited without a token, and falls
-back to `git@github.com:` -- which fails with "cannot run ssh" on a machine
-that has no key. Delete both entries the day the themes are tagged.
+**3. Everything resolves from Packagist.** There are no `repositories`
+entries and no path repositories. Until 2026-09-03 this file carried two
+`vcs` entries because `coolms/theme-default` and `coolms/theme-bootstrap`
+had never been submitted; they are registered now and the entries are gone.
+If you are reading this in a fork that still has them, deleting them is the
+test that the platform is installable rather than merely buildable here.
 
 **4. `config/services.yaml` must bind `string $projectDir`.**
 `coolms/core-bundle` ships console commands taking a plain string argument
