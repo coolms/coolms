@@ -57,10 +57,21 @@ paths, consume built output.
   imported at **6 sites** and is deliberately private -- it 404s on npm. B
   cannot be completed without either publishing it or removing those six
   imports.
-- Further costs: the four `@coolms/designer/*` subpath specifiers need
-  export maps; and `packages/*-angular/node_modules` is a symlink to the
-  admin's single Angular tree, so "npm install in the admin" is not a
-  local operation.
+- ⚠️ **Blocked a second time, measured.** The published `@coolms/designer`
+  `0.1.0-alpha.1` declares an `exports` map with **three** subpaths -- `.`,
+  `./global`, `./styles`. The admin imports **five** designer specifiers:
+  `@coolms/designer` plus `/bpmn-lite`, `/dmn-drd`, `/dmn-table` and
+  `/state-machine`. Four of the five cannot be resolved from the registry
+  today at all.
+- Further cost: `packages/*-angular/node_modules` is a symlink to the
+  admin's single Angular tree, so "npm install in the admin" is not a local
+  operation.
+
+⚠️ Separately, and in `designer`'s favour: its absent `dependencies` field
+is **correct**. Swept its 98 source `.ts` files for bare runtime specifiers
+and found **zero** -- every import is relative. A package declaring nothing
+can be either genuinely self-contained or broken from a clean checkout, and
+this one is the first.
 
 ### C. Ship the theme prebuilt from its own repository
 
