@@ -14,6 +14,12 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            # coolms/core-bundle ships console commands that take a plain
+            # `string $projectDir`. Autowiring cannot fill a scalar, so
+            # without this the container fails on RemoveModuleCommand.
+            # One more thing the packages leave to the consumer.
+            string $projectDir: '%kernel.project_dir%'
 
     # coolms/rql ships three pure library classes -- one id each.
     CoolMS\Rql\RqlParser: ~

@@ -50,10 +50,10 @@ Two undeclared-dependency defects, one feeding the other.
 
 **So adding the missing libraries is whack-a-mole, and the fix belongs in the
 package**: a class that will not load is one the bundle does not own, which
-makes it "not ours" and never an error. The skeleton carries
-`tools/patch-entity-bundle.php` as a post-install step until a release
-carries it -- idempotent, and it refuses rather than guesses if the code has
-moved.
+makes it "not ours" and never an error. **Fixed and released as `coolms/entity-bundle` v2.0.0-alpha2** (2026-09-03).
+The skeleton carried a `tools/patch-entity-bundle.php` post-install step that
+edited vendor until then; that file is gone, and `composer install` no longer
+touches anything it downloaded.
 
 Invisible in the monolith, which requires `symfony/twig-bundle` and enough
 else that every optional class happens to resolve.

@@ -79,5 +79,11 @@ structure installers and module installers it found, and refuse (or at
 minimum warn) when both are zero, because zero means the application
 registered no modules and that is never what the operator wanted.
 
-This is the one defect on this page that is fixable inside a published
-package today.
+**Fixed and released the same day** as `coolms/core-bundle` v2.0.0-alpha2.
+The command now names its counts per section
+(`VFS structure -- 7 installer(s)`) and refuses, non-zero, when both sets
+are empty. Verified both ways: the CoolMS application still installs and
+reports 7 structure and 22 module installers; this skeleton exits 1.
+
+So the last line of the run above is no longer a false green. It is the
+measurement this whole page is about, printed by the installer itself.

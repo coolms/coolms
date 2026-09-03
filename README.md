@@ -36,8 +36,25 @@ docker compose exec app php bin/console doctrine:schema:create
 docker compose exec app php bin/console coolms:install
 ```
 
-`coolms:install` writes a `COOLMS_SECRET_MASTER_KEY` into `.env.local`.
-Back it up: everything sealed by the secret store is undecryptable without it.
+The first two commands succeed. `doctrine:schema:create` builds four tables.
+
+⚠️ **`coolms:install` exits 1, on purpose:**
+
+```
+[ERROR] Nothing to install: this application registers no structure
+        installers and no module installers.
+```
+
+That is correct, and it is the shortest statement of what this skeleton is.
+`coolms:install` runs what the installed modules contribute; a distribution
+that ships no CoolMS module contributes nothing. Until 2026-09-03 the same
+command printed two empty sections and `[OK] Installation complete.`, which
+is how an installation that did nothing came to look like one that did
+everything. `coolms/core-bundle` 2.0.0-alpha2 refuses instead.
+
+It still provisions `COOLMS_SECRET_MASTER_KEY` into the env file your
+environment reads before it refuses. Back that file up: everything sealed by
+the secret store is undecryptable without it.
 
 ## Four things that will bite you, all of them measured here
 
@@ -60,18 +77,10 @@ composer asks the GitHub API, gets rate-limited without a token, and falls
 back to `git@github.com:` -- which fails with "cannot run ssh" on a machine
 that has no key. Delete both entries the day the themes are tagged.
 
-**4. `composer install` patches a package, on purpose.**
-`tools/patch-entity-bundle.php` runs as a post-install step and edits one
-file in `vendor/coolms/entity-bundle`. Without it the container does not
-compile at all: `VirtualFieldServicesPass` force-loads every service class
-in the container, and two classes in this very vendor tree extend an
-optional dependency that is not installed --
-`doctrine/doctrine-bundle`'s Twig extension, and `symfony/translation`'s
-AST extractor, which wants `nikic/php-parser`. Installing the missing
-libraries is whack-a-mole; installing twig only revealed the second one.
-The patch is idempotent, refuses to run if the code has changed, and
-should be deleted the day a release of `coolms/entity-bundle` carries the
-fix. See [docs/only-works-here.md](docs/only-works-here.md) §4.
+**4. `config/services.yaml` must bind `string $projectDir`.**
+`coolms/core-bundle` ships console commands taking a plain string argument
+that autowiring cannot fill. Without the bind the container fails on
+`RemoveModuleCommand`. One more thing the packages leave to the consumer.
 
 **5. `minimum-stability` is `dev`.** It has to be: the themes resolve through
 `branch-alias dev-develop => 1.0.x-dev`, and `coolms/core` and the other
@@ -88,10 +97,10 @@ have to be copied into every consuming application. They are in
 
 ## And `src/` is not empty, though it should be
 
-Three classes, implementing four ports that published packages REQUIRE as
-constructor arguments and that no published package supplies. Each one names
-the CoolMS module that should replace it. They are the extraction backlog in
-executable form, and every one is a file to delete rather than to build on.
+Four classes, covering five ports that published packages require
+and no published package supplies. Which of them actually block a build
+changes as the published set changes -- see the docs. Each names the module
+that should replace it, and each is a file to delete rather than build on.
 
 ## Licence
 

@@ -65,11 +65,9 @@
             "cache:clear": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@php tools/patch-entity-bundle.php",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@php tools/patch-entity-bundle.php",
             "@auto-scripts"
         ]
     },

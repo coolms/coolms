@@ -61,14 +61,62 @@ that the application resolves those packages through `path` repositories,
 so it has never once run against the versions its own `composer.json`
 names. Nothing here would have surfaced any other way.
 
-⚠️ **This means `coolms/entity` v2.0.0-alpha1 cannot compile a container in
-any application that is not CoolMS.** It was published, it installs, and it
-does not work -- the difference the npm session named for the Angular
-packages, in the PHP set.
+## ⚠️ How hard a blocker each one is -- measured, because the wording was too strong
 
-The skeleton papers over it with three stand-in classes under
+An earlier draft of this page said `coolms/entity` "cannot compile a
+container in any application that is not CoolMS". That was too strong, and
+the skeleton itself was the counter-example: its `src/` is nearly empty and
+it compiles. Three explanations were possible -- the ports are never
+reached, something else satisfies them, or the claim is narrower than its
+wording. Removing the stand-ins one at a time settles it:
+
+| stand-in removed | container |
+| --- | --- |
+| all of them | **fails** on `FieldSchemaSourceInterface` |
+| `NoRuntimeFields` only | **fails** on `FieldSchemaSourceInterface` |
+| `NoTypeSchemaContribution` only | compiles |
+| `HashedVisitorReference` only | compiles |
+| the `FieldMetadataSourceInterface` half of `NoRuntimeFields` | compiles |
+
+⚠️ **And the answer moved the same day.** Those runs were made against
+the published set as it stood at 2.0.0-alpha1. Releasing `coolms/core`
+and `coolms/core-bundle` 2.0.0-alpha2 added
+`ModuleNavigationRemoverInterface` and a consumer that requires it, so
+that port became a hard blocker too and its stand-in had to be restored
+after being deleted hours earlier. **Which ports are load-bearing is a
+property of the published set, and it moves when the set moves.**
+
+Against 2.0.0-alpha1, **one** contract was a hard blocker rather than four:
+
+- **`FieldSchemaSourceInterface`** is required, non-null, and its consumer
+  (`EntitySchemaLookup`) is live in a minimal application. Nothing compiles
+  without an implementation.
+- **`EntityTypeSchemaContributorInterface`** was never a defect at all: the
+  constructor takes it as `?EntityTypeSchemaContributorInterface = null`,
+  and `coolms/entity`'s README already marks it **optional**. My sweep
+  counted it because it matched a typed constructor argument without
+  checking nullability.
+- **`FieldMetadataSourceInterface`** and **`VisitorReferenceGeneratorInterface`**
+  are required by signature, but their consumers
+  (`DoctrineEntitySchemaProvider`, `RequestVisitorReference`) are not
+  referenced in a minimal application, so nothing forces them to be built.
+  They bite the moment something uses them.
+
+The honest statement is therefore: **the published packages do stand up in
+an application that is not CoolMS -- after the consumer writes one class.**
+That is a real defect and a much smaller one than "they do not work".
+
+⚠️ And the documentation is better than assumed: `coolms/entity`'s README
+carries a **Port table** naming `FieldSchemaSourceInterface`,
+`FieldMetadataSourceInterface` and the optional contributor, with
+"typically implemented by the field-management module" against each. What it
+does not say is that the container will not build without the first -- it
+reads as guidance rather than a requirement. `VisitorReferenceGeneratorInterface`
+is named in **0 of 14** shipped READMEs.
+
+The skeleton carries four stand-in classes under
 `src/Platform/`, each naming the module that should replace it. Deleting
-those three files is the acceptance test for the extraction.
+those four files is the acceptance test for the extraction.
 
 ## Priority, if the backlog needs an order
 
