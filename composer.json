@@ -1,0 +1,84 @@
+{
+    "name": "coolms/skeleton",
+    "description": "A minimal CoolMS application.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "coolms/core": "^2.0@alpha",
+        "coolms/core-bundle": "^2.0@alpha",
+        "coolms/core-doctrine": "^2.0@alpha",
+        "coolms/core-module": "^2.0@alpha",
+        "coolms/dtmpl": "^2.0",
+        "coolms/dtmpl-bundle": "^2.0",
+        "coolms/entity": "^2.0@alpha",
+        "coolms/entity-bundle": "^2.0@alpha",
+        "coolms/entity-doctrine": "^2.0@alpha",
+        "coolms/entity-module": "^2.0@alpha",
+        "coolms/rql": "^1.0",
+        "coolms/rql-doctrine": "^1.0",
+        "coolms/theme-default": "^1.0",
+        "doctrine/doctrine-bundle": "^3.2",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "doctrine/orm": "^3.6",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pgsql": "*",
+        "ext-simplexml": "*",
+        "php": ">=8.5",
+        "symfony/console": "^8.0",
+        "symfony/dotenv": "^8.0",
+        "symfony/flex": "^2",
+        "symfony/framework-bundle": "^8.0",
+        "symfony/runtime": "^8.0",
+        "symfony/translation": "^8.0",
+        "symfony/yaml": "^8.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        },
+        "sort-packages": true
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/coolms/theme-default.git",
+            "no-api": true
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/coolms/theme-bootstrap.git",
+            "no-api": true
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@php tools/patch-entity-bundle.php",
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@php tools/patch-entity-bundle.php",
+            "@auto-scripts"
+        ]
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "^8.0"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

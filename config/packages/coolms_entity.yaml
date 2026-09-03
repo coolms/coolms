@@ -1,0 +1,5 @@
+# Opt-in and enforcing nothing by default -- see the bundle's own docs.
+entity:
+    extras_validation:
+        aliases: []
+        exclude: []

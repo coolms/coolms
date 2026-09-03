@@ -1,0 +1,16 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        driver: 'pdo_pgsql'
+        charset: utf8
+
+    orm:
+        # ⚠️ `auto_generate_proxy_classes`, `enable_lazy_ghost_objects`,
+        # `report_fields_where_declared` and `proxy_dir` are NOT options in
+        # DoctrineBundle 3.x -- this bundle always uses PHP native lazy
+        # objects. The stock Symfony recipe still writes them, and loose at
+        # the `orm` level they are folded into an implicit `default`
+        # manager and then rejected, so a skeleton copied from the recipe
+        # does not boot. Kept minimal on purpose.
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true

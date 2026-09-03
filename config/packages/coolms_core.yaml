@@ -1,0 +1,6 @@
+core:
+    site_name:   '%env(string:COOLMS_SITE_NAME)%'
+    app_version: '%env(string:COOLMS_APP_VERSION)%'
+    supported_locales:
+        - { code: en, label: English }
+    default_locale: en

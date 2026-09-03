@@ -1,0 +1,38 @@
+# Four services. The CoolMS development tree runs eighteen -- Asterisk,
+# LiveKit, coturn, Meilisearch, Gotenberg, Centrifugo and the rest -- and
+# every one of them belongs to a module that is not in this skeleton. Add a
+# service when you add the module that needs it.
+services:
+  app:
+    build:
+      context: ./docker/php
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    env_file: .env
+    depends_on:
+      - postgres
+
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - '8080:80'
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  postgres:
+    # postgres only. CoolMS stores extras as jsonb and the RQL translator
+    # emits postgres-specific SQL; there is no other supported platform.
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: coolms
+      POSTGRES_PASSWORD: coolms
+      POSTGRES_DB: coolms
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

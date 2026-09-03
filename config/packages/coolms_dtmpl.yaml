@@ -1,0 +1,2 @@
+dtmpl:
+    template_base_path: '%kernel.project_dir%/templates'

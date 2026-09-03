@@ -1,0 +1,9 @@
+# The skeleton uses Doctrine's DEFAULT entity manager name.
+#
+# The CoolMS application tree names its manager `central` and has to say so
+# here. That is application configuration, not a platform requirement --
+# leaving the list empty makes the JSON DQL functions unknown at QUERY time
+# rather than at container-build time, which is why it is stated either way.
+rql_doctrine:
+    entity_managers:
+        - default
