@@ -8,9 +8,8 @@ Measured against Packagist and each repository on 2026-09-03.
 | `coolms/theme-admin` | **404** | 0 | no | lockstep |
 | `coolms/theme-bootstrap` | **404** | 0 | no | lockstep |
 | `coolms/theme-default` | **404** | 0 | no | lockstep |
-| `coolms/theme-coolms-site` | **404** | 0 | no | stays out |
 
-All five are real public GitHub repositories on `develop`, fully pushed.
+All four are real public GitHub repositories on `develop`, fully pushed.
 The problem is not that the code is missing; it is that nothing names a
 version of it.
 

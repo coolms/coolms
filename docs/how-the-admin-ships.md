@@ -1,6 +1,6 @@
 # How the admin ships -- unresolved, with the three options costed
 
-Measured 2026-09-03 in `packages/theme-admin`.
+Measured 2026-09-03 against the CoolMS admin theme.
 
 ## The state
 
@@ -14,8 +14,9 @@ devDependencies   @coolms/*: 0
 ```
 
 They resolve through `tsconfig` `paths` into sibling source trees
-(`../../ui-angular/src/public-api.ts` and so on). That works only inside the
-monorepo.
+(`../../ui-angular/src/public-api.ts` and so on). That works only where those
+siblings are checked out next to each other, which a consumer installing from
+Packagist will not have.
 
 The build output is `theme-admin/public/`, gitignored. Of 513 files tracked
 in the repository, **0** are build output (the 25 matching `public` are
