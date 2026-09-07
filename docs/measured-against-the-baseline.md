@@ -1,13 +1,20 @@
 # The skeleton against the baseline installation
 
-Run 2026-09-03. A clean checkout of this skeleton, in a container built
-from `docker/php/Dockerfile`, against a database created empty.
+First run 2026-09-03, against a database created empty. **Re-run it yourself --
+that is what the date is for here, and the result below still holds:**
 
 ```bash
-composer install
-php bin/console doctrine:schema:create
-php bin/console coolms:install
+cp .env.dist .env
+docker compose up -d
+docker compose exec app composer install
+docker compose exec app php bin/console doctrine:schema:create
+docker compose exec app php bin/console coolms:install
 ```
+
+These are the README's Get started steps verbatim, and CI runs them on every
+change to this repository. The earlier version of this page listed only the last
+three, which is not enough to reproduce anything: `.env` has to exist before
+`composer install`.
 
 ## Result: 0 of 14
 

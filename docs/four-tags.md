@@ -1,6 +1,14 @@
 # The four tags
 
-Measured against Packagist and each repository on 2026-09-03.
+**Resolved. All four are tagged and serving on Packagist**, and you can settle
+that yourself in one request -- `https://repo.packagist.org/p2/coolms/theme-default.json`,
+or `composer show coolms/theme-default --all` -- which is why no version numbers
+are repeated here.
+
+What follows is the record of how that was reached, written while it was still
+open. **The table below is the state on 2026-09-03, not today**, and it is kept
+because the reasoning is the point: what tagging needed first, and why tagging
+alone was not enough for three of the four.
 
 | package | Packagist | git tags | changelog | release set |
 | --- | --- | --- | --- | --- |
@@ -22,9 +30,13 @@ necessary and not sufficient -- each also needs submitting.
 
 `theme-admin`, `theme-bootstrap` and `theme-default` each carry
 `extra.branch-alias: {"dev-develop": "1.0.x-dev"}`, so a `vcs` repository
-entry plus `minimum-stability: dev` makes `^1.0` resolve. That is the only
-reason this skeleton works today, and it is why `composer.json` still
-carries three repository entries a released product would not have.
+entry plus `minimum-stability: dev` made `^1.0` resolve. That was the only
+reason this skeleton worked at the time, and it is why `composer.json` then
+carried three repository entries a released product would not have.
+
+**Those entries are gone.** `composer.json` in this repository now has an empty
+`repositories` list -- read it and see -- which is step 4 below, and the
+acceptance test the whole exercise existed to pass.
 
 ⚠️ `coolms/ooxml` has **no branch-alias and no tag**, so `^1.0` resolves to
 nothing at all. Any consumer must write `dev-develop` explicitly. The
@@ -54,8 +66,10 @@ of `CHANGELOG.md`. **None of the five has one.** So the order is:
 
 1. write a `CHANGELOG.md` for each of the four (`theme-coolms-site` is not a
    release target);
-2. tag -- and per the cadence, an **alpha** matching the generation, not a
-   stable tag, because the platform set is still on `v2.0.0-alpha1`;
+2. tag -- and per the cadence, an **alpha** matching the generation rather
+   than a stable tag. (The generation has moved on since; `composer.lock` in
+   this repository pins the exact set, which is the only version list here
+   that cannot go stale.)
 3. submit the three themes to Packagist, which `ooxml` does not need;
 4. delete the three `vcs` entries from this skeleton's `composer.json` and
    re-run the clean-container install to prove it.
@@ -64,9 +78,12 @@ Step 4 is the acceptance test, and it is the reason to do this at all: until
 it passes, "CoolMS is installable" is a statement about one laptop.
 
 ⚠️ Note the release set puts the four themes **lockstep** with
-`coolms/core` and `coolms/ooxml` **independent**, so they do not get the
-same version number. `release-tools/release-set.py --report` computes it;
-do not hand-maintain the list.
+`coolms/core` and `coolms/ooxml` **independent**, so they do not get the same
+version number. The set is computed from the dependency graph -- a package is in
+it if and only if it requires `coolms/core`, directly or transitively -- and
+never hand-maintained, because a hand-kept list goes stale the first time a
+package is added. (The tool that computes it lives in a private repository, so
+this is one of the few statements on this page you cannot check from here.)
 
 ## Outcome, 2026-09-03
 
