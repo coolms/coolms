@@ -1,0 +1,135 @@
+# The README's Get started steps, run as written, on every change.
+#
+# This is not a unit suite and deliberately not one. Every other repository in
+# the estate tests what its code asserts; this one tests what a stranger gets
+# when they follow the install page, which is the only thing this repository is
+# for. Four of the five defects found by hand on 2026-09-07 are caught below,
+# and the fifth -- a master key written unreadable by the web user -- is caught
+# by the request that follows them.
+name: Get started
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+
+jobs:
+  documented-install:
+    name: The documented install
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 'Step 1: cp .env.dist .env'
+        run: cp .env.dist .env
+
+      - name: 'Step 2: docker compose up -d'
+        run: docker compose up -d
+
+      # The compose file declares no healthcheck, so `depends_on` only waits for
+      # the container to start, not for postgres to accept connections.
+      - name: Wait for postgres to accept connections
+        run: |
+          for _ in $(seq 1 60); do
+            if docker compose exec -T postgres pg_isready -U coolms -d coolms >/dev/null 2>&1; then
+              echo "ready"; exit 0
+            fi
+            sleep 2
+          done
+          echo "postgres never became ready"; docker compose logs postgres; exit 1
+
+      - name: 'Step 3: composer install'
+        run: docker compose exec -T app composer install --no-interaction
+
+      # !! A CLONE MUST BE WHAT THE REPOSITORY SAYS IT IS. Without a committed
+      # `symfony.lock` the Flex recipes re-ran on every clone and rewrote five
+      # tracked files -- including deleting a comment that explained why the
+      # bundle list is short. This is the check that would have caught it.
+      - name: composer install must not rewrite tracked files
+        run: |
+          dirty="$(git status --porcelain)"
+          if [ -n "$dirty" ]; then
+            echo "composer install modified the working tree:"
+            echo "$dirty"
+            git --no-pager diff --stat
+            exit 1
+          fi
+          echo "tree clean"
+
+      - name: 'Step 4: doctrine:schema:create'
+        run: |
+          docker compose exec -T app php bin/console doctrine:schema:create
+          n="$(docker compose exec -T postgres psql -U coolms -d coolms -tAc \
+                 "select count(*) from pg_tables where schemaname='public'" | tr -d ' \r')"
+          echo "tables created: $n"
+          [ "$n" = "4" ] || { echo "expected 4 tables, got $n"; exit 1; }
+
+      # !! EXIT 1 IS THE DOCUMENTED, CORRECT OUTCOME -- the README says so. The
+      # assertion is therefore not "it succeeded" but "it failed for the stated
+      # reason", because exit 1 for any OTHER reason is a real regression that a
+      # bare `|| true` would hide.
+      - name: 'Step 5: coolms:install refuses over an empty installer set'
+        run: |
+          set +e
+          out="$(docker compose exec -T app php bin/console coolms:install 2>&1)"
+          rc=$?
+          set -e
+          echo "$out"
+          [ "$rc" = "1" ] || { echo "expected exit 1, got $rc"; exit 1; }
+          echo "$out" | grep -q "Nothing to install" \
+            || { echo "exited 1, but not for the documented reason"; exit 1; }
+
+      # !! The install writes the at-rest master key 0600. Ownership is then the
+      # only thing between the key and php-fpm, which serves as www-data while
+      # the console runs as root. When this was wrong every request died in
+      # Dotenv before the kernel booted -- and was served as HTTP 200.
+      - name: The generated key must be readable by the user that serves
+        run: |
+          docker compose exec -T app ls -l /var/www/.env.local
+          docker compose exec -T -u www-data app sh -c 'test -r /var/www/.env.local' \
+            || { echo ".env.local unreadable by www-data: every request would fatal"; exit 1; }
+
+      # !! AN EMPTY RESPONSE MUST NOT BE INDISTINGUISHABLE FROM A FULL ONE.
+      # A status code says nothing about what produced it. The fatal above was
+      # served as 200, and what exposed it was two different URLs returning
+      # byte-identical bodies -- so that comparison is the assertion here, not
+      # the status.
+      - name: The site must answer, and must not answer everything identically
+        run: |
+          docker compose restart nginx
+          for _ in $(seq 1 30); do
+            curl -s -o /dev/null http://localhost:8080/api && break || sleep 2
+          done
+
+          api_code="$(curl -s -o /tmp/api  -w '%{http_code}' http://localhost:8080/api)"
+          doc_code="$(curl -s -o /tmp/docs -w '%{http_code}' http://localhost:8080/api/docs)"
+          root_code="$(curl -s -o /tmp/root -w '%{http_code}' http://localhost:8080/)"
+          echo "/api=$api_code  /api/docs=$doc_code  /=$root_code"
+          for f in /tmp/api /tmp/docs /tmp/root; do
+            echo "  $f  $(wc -c < $f) bytes  $(md5sum < $f | cut -c1-8)"
+          done
+
+          [ "$api_code" = "200" ] || { echo "/api did not answer 200"; exit 1; }
+          [ "$doc_code" = "200" ] || { echo "/api/docs did not answer 200"; exit 1; }
+
+          # A PHP fatal is served with a 200 by php-fpm. Read the body, not the code.
+          for f in /tmp/api /tmp/docs /tmp/root; do
+            if grep -qiE 'fatal error|uncaught (exception|error)' "$f"; then
+              echo "a response carries a PHP fatal despite its status code: $f"
+              head -c 400 "$f"; exit 1
+            fi
+          done
+
+          # Two distinct URLs returning identical bytes means one error page
+          # wearing several addresses.
+          if [ "$(md5sum < /tmp/api)" = "$(md5sum < /tmp/docs)" ]; then
+            echo "/api and /api/docs returned byte-identical bodies"
+            exit 1
+          fi
+          echo "distinct responses"
+
+      - name: Container logs on failure
+        if: failure()
+        run: docker compose logs --tail=200
