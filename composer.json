@@ -1,6 +1,6 @@
 {
-    "name": "coolms/skeleton",
-    "description": "A minimal CoolMS application.",
+    "name": "coolms/coolms",
+    "description": "CoolMS: a modular CMS platform. This is the application you install.",
     "type": "project",
     "license": "MIT",
     "require": {
