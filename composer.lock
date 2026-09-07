@@ -362,16 +362,16 @@
         },
         {
             "name": "coolms/core-bundle",
-            "version": "v2.0.0-alpha3",
+            "version": "v2.0.0-alpha4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/core-bundle.git",
-                "reference": "d5b28d09f378e2a4bfcbe54c9471fcb7c625a955"
+                "reference": "77ea2543d1153728ebc9a38371906be3f38fb20d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/core-bundle/zipball/d5b28d09f378e2a4bfcbe54c9471fcb7c625a955",
-                "reference": "d5b28d09f378e2a4bfcbe54c9471fcb7c625a955",
+                "url": "https://api.github.com/repos/coolms/core-bundle/zipball/77ea2543d1153728ebc9a38371906be3f38fb20d",
+                "reference": "77ea2543d1153728ebc9a38371906be3f38fb20d",
                 "shasum": ""
             },
             "require": {
@@ -444,9 +444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/core-bundle/issues",
-                "source": "https://github.com/coolms/core-bundle/tree/v2.0.0-alpha3"
+                "source": "https://github.com/coolms/core-bundle/tree/v2.0.0-alpha4"
             },
-            "time": "2026-09-03T21:21:46+00:00"
+            "time": "2026-09-07T14:59:06+00:00"
         },
         {
             "name": "coolms/core-doctrine",
@@ -7066,6 +7066,6 @@
         "ext-simplexml": "*",
         "php": ">=8.5"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.9.0"
 }
