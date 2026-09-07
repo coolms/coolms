@@ -1,4 +1,4 @@
-# The skeleton against `docs/baseline-installation.md`
+# The skeleton against the baseline installation
 
 Run 2026-09-03. A clean checkout of this skeleton, in a container built
 from `docker/php/Dockerfile`, against a database created empty.
@@ -46,7 +46,7 @@ The task that produced this run framed it as a binary: either the installer
 does not produce what it claims, or the document describes a machine rather
 than a product.
 
-**Neither.** `docs/baseline-installation.md` is accurate -- it is generated
+**Neither.** The baseline document is accurate -- it is generated
 by `tools/report-baseline-install.php` against a scratch database, and the
 installer really does produce all fourteen items. The third possibility is
 the true one:
