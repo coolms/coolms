@@ -2,6 +2,12 @@
 
 Measured 2026-09-03 against the CoolMS application tree.
 
+⚠️ **That tree is not public, so this is the one page in this repository whose
+numbers you cannot check for yourself.** That is why it carries a date and the
+rest of the repository's claims do not: a date belongs on what a reader cannot
+verify, and everything else here should give you the file or the command
+instead.
+
 ## The application tree is almost entirely platform
 
 `src/` holds **64 module directories and 3,424 PHP files**. Swept for the
@@ -127,7 +133,8 @@ arises.
 
 ## Three bundles it configures without declaring
 
-Measured 2026-09-07, from a clean clone.
+Check it in your own clone: the `require` block of `composer.json` against the
+bundle list in `config/bundles.php`.
 
 `config/bundles.php` registers `ApiPlatformBundle` and `SecurityBundle`, and
 `config/packages/` configures api-platform, messenger and security. **None of the
