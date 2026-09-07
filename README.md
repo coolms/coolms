@@ -97,8 +97,9 @@ The `coolms/*` packages register almost none of their own services. They alias
 interfaces to concrete classes and leave registering those classes to you, so
 eight prototype scans pointing into `vendor/coolms/*/src/` — with an exclusion
 list on each, every entry load-bearing and none guessable — have to be copied
-into every consuming application. They are in `config/services.yaml` here.
-**Do not trim them.** (Counted 2026-09-07.)
+into every consuming application. They are in `config/services.yaml` here, and you can count them yourself:
+they are the `resource:` entries pointing into `vendor/coolms`.
+**Do not trim them.**
 
 ## And `src/` is not empty, though it should be
 
