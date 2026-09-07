@@ -124,3 +124,33 @@ By this measurement rather than by size: `Field` (2 ports, blocks the whole
 extras engine), then `DynamicEntity` and `Analytics` (1 each). Those three
 are what a package consumer is missing before any question of features
 arises.
+
+## Three bundles it configures without declaring
+
+Measured 2026-09-07, from a clean clone.
+
+`config/bundles.php` registers `ApiPlatformBundle` and `SecurityBundle`, and
+`config/packages/` configures api-platform, messenger and security. **None of the
+three is in `composer.json`** -- 31 entries in `require`, and
+`api-platform/core`, `symfony/messenger` and `symfony/security-bundle` are not
+among them. They arrive transitively, through the `coolms/*` packages that
+require them.
+
+It works, and it works for a reason that is not a guarantee: **somebody else is
+pulling them.** The day a `coolms/*` package drops one, this application stops
+booting, and the failure names a missing class rather than a missing dependency
+-- so the message points at the wrong repository. That is the sole-holder shape
+the platform has met before, in `symfony/config` under the themes and
+`phpdocumentor/reflection-docblock` under the OpenAPI document.
+
+⚠️ **Nothing will catch it.** The publish guard's `frameworks` rule is exactly
+this check, and it is disabled for this repository by the `template` intent --
+correctly, because a template *is* the application and legitimately names the
+frameworks it runs on. The relaxation is right and it means this particular
+defect has no automated reader.
+
+**The fix is small and is not done here**: declare the three at the versions the
+lock already resolves, and refresh the lock. It is left out of the commit that
+made the tree complete because that commit's claim was *what the recipes wrote
+was reviewed*, and quietly widening `require` at the same time would have made
+that claim harder to check, not easier.
