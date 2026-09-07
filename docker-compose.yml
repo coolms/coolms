@@ -1,4 +1,4 @@
-# Four services. The CoolMS development tree runs eighteen -- Asterisk,
+# Three services. The CoolMS development tree runs eighteen -- Asterisk,
 # LiveKit, coturn, Meilisearch, Gotenberg, Centrifugo and the rest -- and
 # every one of them belongs to a module that is not in this skeleton. Add a
 # service when you add the module that needs it.
