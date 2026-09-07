@@ -3,6 +3,12 @@
 The list this skeleton exists to produce. Each entry is something that never
 failed in the CoolMS tree and failed here, in order of discovery.
 
+⚠️ **This is a record, not a status page.** Several entries have since been
+fixed, and each of those says so in place. Where an entry describes this
+repository you can check it in your own clone; where it describes the CoolMS
+application tree you cannot, because that tree is not public, and those entries
+carry the date they were measured.
+
 ## 1. `path` repositories with `symlink: true`
 
 The application's `composer.json` carries **17** `path` repository entries
@@ -14,8 +20,11 @@ whether the packages install.
 ## 2. Three required packages are not on Packagist at all
 
 `coolms/theme-admin`, `coolms/theme-bootstrap` and `coolms/theme-default`
-**404**. `coolms/ooxml` is registered with an **empty version list**. See
-`four-tags.md`.
+**404**ed. `coolms/ooxml` was registered with an **empty version list**.
+
+**Fixed.** All four now serve tags on Packagist -- one request settles it,
+`https://repo.packagist.org/p2/coolms/theme-default.json`. See `four-tags.md`
+for what tagging needed first, and why registering was a separate step.
 
 ## 3. Without a GitHub token, a `vcs` repository falls back to ssh
 
@@ -89,10 +98,15 @@ caught because prod had never been built.
 
 ## 8. A Flex recipe appends a second `DATABASE_URL`
 
-Installing `doctrine/doctrine-bundle` writes
+Installing `doctrine/doctrine-bundle` wrote
 `DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app..."` to the end
-of `.env`. The last line wins, so a correctly configured skeleton fails with
-`connection to server at "127.0.0.1" failed` while its database is running.
+of `.env`. The last line wins, so a correctly configured skeleton failed with
+`connection to server at "127.0.0.1" failed` while its database was running.
+
+**Fixed, by committing the lock files.** With `composer.lock` and `symfony.lock`
+tracked, the Flex recipes do not re-apply on a clone and nothing is appended.
+CI asserts it: the build fails if `composer install` leaves the working tree
+dirty. See *Why the lock files are committed* in the README.
 
 ## 9. `doctrine:migrations:migrate` has nothing to run
 
@@ -104,7 +118,10 @@ to say `doctrine:schema:create` instead, and nothing says so anywhere.
 
 ## 10. Eighteen docker services, four of them needed
 
-The development `docker-compose.yml` runs app, nginx, postgres, redis,
+Measured 2026-09-03 against the CoolMS development tree, which is not public
+-- this is one of the entries you cannot check from here.
+
+The development `docker-compose.yml` ran app, nginx, postgres, redis,
 meilisearch, mailhog, greenmail, adminer, gotenberg, centrifugo, coturn,
 livekit, egress, asterisk, asterisk-dialer, ami-listener, messenger and a
 second database. Every one past the first four belongs to a module that is
