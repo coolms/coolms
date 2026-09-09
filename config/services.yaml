@@ -35,6 +35,15 @@ services:
             - '%kernel.project_dir%/vendor/coolms/core/src/Registry/'
             - '%kernel.project_dir%/vendor/coolms/core/src/Identity/EntityWalkUserGroupResolver.php'
 
+    # The composition tier is wired but no longer REQUIRED by this manifest: it
+    # arrives transitively, because the published core-bundle requires it by
+    # name. Removing the requirement did not remove the package, and the wiring
+    # has to name what an install actually contains.
+    #
+    # `coolms/core-app` was never published under that name. Pointing at it made
+    # `cache:clear` fail during `composer install`, which is three steps before
+    # anything that checks a manifest -- so the whole documented install stopped
+    # at step 3 and every later assertion was skipped rather than run.
     CoolMS\CoreModule\:
         resource: '%kernel.project_dir%/vendor/coolms/core-module/src/'
         exclude:
@@ -57,6 +66,8 @@ services:
         exclude:
             - '%kernel.project_dir%/vendor/coolms/entity/src/ValueObject/'
 
+    # Same as the core tier above: required by the published entity-bundle,
+    # not by this manifest, and published only under its `-module` name.
     CoolMS\EntityModule\:
         resource: '%kernel.project_dir%/vendor/coolms/entity-module/src/'
 
