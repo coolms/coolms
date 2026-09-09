@@ -58,6 +58,27 @@ jobs:
           fi
           echo "tree clean"
 
+      # !! WHAT STEP 3 PROVES, AND WHAT IT DOES NOT. `composer install` installs
+      # the pinned set from the tracked composer.lock. It never resolves the
+      # constraints in composer.json, so everything below is a statement about
+      # ONE FROZEN SET OF VERSIONS and says nothing about the manifest a reader
+      # of the README actually sees.
+      #
+      # composer knows when the two have drifted and says so -- as a WARNING,
+      # after which it installs from the lock anyway. A warning inside a step
+      # that exits 0 is a green run over an untested manifest, which is the
+      # same shape as every other silent pass this estate has had to learn
+      # about. This turns it into a failure.
+      #
+      # Measured 2026-09-09: validate already reports the lock out of date, and
+      # the lock still installs coolms/core-module and coolms/entity-module --
+      # the composition tier this repository's manifest deliberately stopped
+      # naming -- because the PUBLISHED core-bundle and entity-bundle alphas
+      # still require them. So the tier the README does not mention is
+      # installed on every run, and nothing here could see it.
+      - name: The lock must still describe the manifest
+        run: docker compose exec -T app composer validate --no-check-publish
+
       - name: 'Step 4: doctrine:schema:create'
         run: |
           docker compose exec -T app php bin/console doctrine:schema:create
@@ -129,6 +150,58 @@ jobs:
             exit 1
           fi
           echo "distinct responses"
+
+      - name: Container logs on failure
+        if: failure()
+        run: docker compose logs --tail=200
+
+  # The other half of the question, which the job above cannot reach.
+  #
+  # `composer install` answers "does this frozen set still work". Nobody asks
+  # "do the constraints in composer.json resolve at all", and that is the
+  # question a reader who runs `composer require coolms/...`, or who installs
+  # without this repository's lock, is actually asking. A constraint that has
+  # stopped resolving -- a yanked alpha, a peer that never got published under
+  # the name its sibling requires -- is invisible to a locked install forever.
+  #
+  # !! IT FAILS ON "CANNOT RESOLVE", NOT ON "DIFFERS FROM THE LOCK". During an
+  # alpha generation the manifest resolving to something newer than the lock is
+  # the NORMAL state, and a gate that goes red for the normal state gets
+  # muted -- so the delta is printed and only unresolvability is fatal.
+  manifest-resolves:
+    name: The manifest resolves, not only the lock
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: cp .env.dist .env
+
+      - run: docker compose up -d
+
+      - name: Resolve composer.json against the registry
+        run: |
+          set -o pipefail
+          docker compose exec -T app composer update --dry-run --no-interaction \
+            2>&1 | tee /tmp/resolve.log
+          echo "the manifest resolves"
+
+      - name: Say how far the resolved set is from the pinned one
+        run: |
+          # A "nothing to report" that looks like every other run is not a
+          # report. Print the operations composer would perform, or say plainly
+          # that there were none.
+          if grep -qE '^  - (Upgrading|Downgrading|Locking|Removing|Installing)' /tmp/resolve.log; then
+            echo "The manifest resolves to a DIFFERENT set than composer.lock pins:"
+            grep -E '^  - (Upgrading|Downgrading|Locking|Removing|Installing)' /tmp/resolve.log
+            echo
+            echo "This is what someone gets who runs composer update, or who"
+            echo "installs without this repository's lock. It is not a failure."
+            echo "It is reported because no other step in this workflow can see it."
+          else
+            echo "The resolved set is identical to the pinned one."
+          fi
 
       - name: Container logs on failure
         if: failure()
