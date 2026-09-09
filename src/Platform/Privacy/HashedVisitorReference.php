@@ -14,7 +14,7 @@ use DateTimeImmutable;
  * only implementation is `src/Analytics` in the CoolMS application
  * (DailyRotatingVisitorReference), which does not ship.
  *
- * ⚠️ Unlike the other four stand-ins there is no neutral answer here: an
+ * !! Unlike the other four stand-ins there is no neutral answer here: an
  * empty reference would collapse every visitor into one. So this does the
  * job the contract describes -- an opaque, fixed-length reference that
  * rotates daily -- and nothing more. The IP and user-agent are consumed

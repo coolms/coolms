@@ -1,4 +1,4 @@
-# ⚠️ MOST OF THIS FILE IS NOT THIS APPLICATION.
+# !! MOST OF THIS FILE IS NOT THIS APPLICATION.
 #
 # The `coolms/*` packages register almost none of their own services. They
 # alias interfaces to concrete classes and leave the registration of those
