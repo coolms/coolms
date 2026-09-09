@@ -77,7 +77,21 @@ jobs:
       # still require them. So the tier the README does not mention is
       # installed on every run, and nothing here could see it.
       - name: The lock must still describe the manifest
-        run: docker compose exec -T app composer validate --no-check-publish
+        run: |
+          # !! WITHOUT THIS, VALIDATE DOES LESS THAN IT LOOKS LIKE IT DOES. The
+          # container serves as a different user than the checkout's owner, so
+          # git refuses the repository -- "detected dubious ownership" -- and
+          # every git-backed check inside `composer validate` is skipped. It
+          # still prints a verdict, and the verdict still covers the lock
+          # comparison, which is a content hash rather than a git operation.
+          # So the step passes or fails on real grounds while quietly not
+          # running part of itself.
+          #
+          # Scoped to THIS step on purpose. Step 3 above hits the same warning
+          # and is deliberately left alone: it walks the README as written, and
+          # a wart a real reader would meet belongs in the run, not hidden by it.
+          docker compose exec -T app git config --global --add safe.directory /var/www
+          docker compose exec -T app composer validate --no-check-publish
 
       - name: 'Step 4: doctrine:schema:create'
         run: |
@@ -183,6 +197,10 @@ jobs:
       - name: Resolve composer.json against the registry
         run: |
           set -o pipefail
+          # Same reason as the validate step in the other job: without this,
+          # git refuses the repository from inside the container and composer's
+          # git-backed work is skipped without saying so.
+          docker compose exec -T app git config --global --add safe.directory /var/www
           docker compose exec -T app composer update --dry-run --no-interaction \
             2>&1 | tee /tmp/resolve.log
           echo "the manifest resolves"
