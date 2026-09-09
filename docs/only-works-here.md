@@ -3,7 +3,7 @@
 The list this skeleton exists to produce. Each entry is something that never
 failed in the CoolMS tree and failed here, in order of discovery.
 
-⚠️ **This is a record, not a status page.** Several entries have since been
+!! **This is a record, not a status page.** Several entries have since been
 fixed, and each of those says so in place. Where an entry describes this
 repository you can check it in your own clone; where it describes the CoolMS
 application tree you cannot, because that tree is not public, and those entries
@@ -47,14 +47,14 @@ what settles the diagnosis:**
 1. `doctrine/doctrine-bundle` ships `src/Twig/DoctrineExtension.php`
    extending `Twig\Extension\AbstractExtension`, and declares twig
    **nowhere** -- not in `require`, `require-dev` or `suggest`.
-   → `Uncaught Error: Class "Twig\Extension\AbstractExtension" not found`,
+   -> `Uncaught Error: Class "Twig\Extension\AbstractExtension" not found`,
    in an application that has never mentioned Twig.
 2. Installing `twig/twig` fixed that and immediately produced
    `Uncaught Error: Interface "PhpParser\NodeVisitor" not found` --
    `symfony/translation`'s `Extractor/Visitor/*` classes, wanting the
    optional `nikic/php-parser`.
 
-⚠️ And `symfony/translation` is in this tree only because §5 forced it in.
+!! And `symfony/translation` is in this tree only because section 5 forced it in.
 Two undeclared-dependency defects, one feeding the other.
 
 **So adding the missing libraries is whack-a-mole, and the fix belongs in the

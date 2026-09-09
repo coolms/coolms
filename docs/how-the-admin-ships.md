@@ -37,11 +37,11 @@ not bytes.)
 | wasm | 0.87 MB | 2% |
 | the stylesheet (1 file) | 0.39 MB | 1% |
 
-⚠️ **Source maps: 0.00 MB.** The usual "more than half a build is source
+!! **Source maps: 0.00 MB.** The usual "more than half a build is source
 maps" does not apply -- this build ships none at all. Byte-identical
 duplicate files come to **0.33 MB**, so there is no easy win there either.
 
-⚠️ **The 14 MB of pdf.js variants is cold weight, not dead weight.** The
+!! **The 14 MB of pdf.js variants is cold weight, not dead weight.** The
 seven files are `pdf.worker` and `viewer` in plain, `-es5` and `.min` forms,
 and a browser loads one worker and one viewer per session. A first pass said
 "referenced by nothing, 14 MB removable" and that was an artefact of
@@ -63,16 +63,16 @@ code is under 4 MB.
 
 So the admin is **neither shipped built nor buildable outside this tree**.
 
-⚠️ **Publishing the nine npm peers did not change this.** The admin does not
+!! **Publishing the nine npm peers did not change this.** The admin does not
 ask npm for them -- it declares nothing, so nothing resolves from a
 registry.
 
 Per-specifier weight, for whoever picks:
 
 ```
-ui-angular 227 · core-angular 189 · editor-angular 30 · designer 6
-document-angular 6 · image-editor-angular 4 · document-viewer-angular 4
-pdf-angular 3 · document-engine 2 · sheet-editor-angular 1
+ui-angular 227 | core-angular 189 | editor-angular 30 | designer 6
+document-angular 6 | image-editor-angular 4 | document-viewer-angular 4
+pdf-angular 3 | document-engine 2 | sheet-editor-angular 1
 ```
 
 ## The three options
@@ -92,11 +92,11 @@ Track `theme-admin/public/` and ship it in the composer package.
 Declare the 14 specifiers at published versions, delete the `tsconfig`
 paths, consume built output.
 
-- ⚠️ **Blocked, not merely expensive.** `@coolms/document-angular` is
+- !! **Blocked, not merely expensive.** `@coolms/document-angular` is
   imported at **6 sites** and is deliberately private -- it 404s on npm. B
   cannot be completed without either publishing it or removing those six
   imports.
-- ⚠️ **Blocked a second time, measured.** The published `@coolms/designer`
+- !! **Blocked a second time, measured.** The published `@coolms/designer`
   `0.1.0-alpha.1` declares an `exports` map with **three** subpaths -- `.`,
   `./global`, `./styles`. The admin imports **five** designer specifiers:
   `@coolms/designer` plus `/bpmn-lite`, `/dmn-drd`, `/dmn-table` and
@@ -106,7 +106,7 @@ paths, consume built output.
   admin's single Angular tree, so "npm install in the admin" is not a local
   operation.
 
-⚠️ Separately, and in `designer`'s favour: its absent `dependencies` field
+!! Separately, and in `designer`'s favour: its absent `dependencies` field
 is **correct**. Swept its 98 source `.ts` files for bare runtime specifiers
 and found **zero** -- every import is relative. A package declaring nothing
 can be either genuinely self-contained or broken from a clean checkout, and
