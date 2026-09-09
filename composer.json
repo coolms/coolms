@@ -13,7 +13,7 @@
         "coolms/entity-bundle": "^2.0@alpha",
         "coolms/entity-doctrine": "^2.0@alpha",
         "coolms/rql": "^1.0",
-        "coolms/rql-doctrine": "^1.0",
+        "coolms/rql-doctrine": "^1.0.1",
         "coolms/theme-default": "^2.0@alpha",
         "doctrine/doctrine-bundle": "^3.2",
         "doctrine/doctrine-migrations-bundle": "^3.3",
