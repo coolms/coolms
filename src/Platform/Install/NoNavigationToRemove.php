@@ -16,7 +16,7 @@ use CoolMS\Core\Install\ModuleNavigationRemoverInterface;
  * An installation with no navigation module has no navigation nodes to remove,
  * so zero is the honest count rather than a swallowed failure.
  *
- * ⚠️ This file was deleted on 2026-09-03 and restored the same day. The
+ * !! This file was deleted on 2026-09-03 and restored the same day. The
  * contract is not in `coolms/core` 2.0.0-alpha1 at all, so against that
  * release the stand-in was itself unloadable; 2.0.0-alpha2 adds it, and
  * core-bundle 2.0.0-alpha2 then requires it. Which ports are load-bearing is a
