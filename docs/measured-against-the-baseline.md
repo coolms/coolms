@@ -35,7 +35,7 @@ three, which is not enough to reproduce anything: `.env` has to exist before
 | Decision definitions | 0 | no table |
 | Content packages | 1 | no table |
 
-⚠️ **The two zero-valued rows disagree as loudly as the others.** "Dynamic
+!! **The two zero-valued rows disagree as loudly as the others.** "Dynamic
 entity types -- 0" is a statement that the module ships and creates none.
 "No table" is a statement that there is no module. Same number, opposite
 meaning, and only one of them is a working installation.
@@ -71,7 +71,7 @@ Two facts make that concrete:
   `src/Web/Infrastructure/Console/SeedBaselineCommand.php`. It is not in any
   package and the skeleton does not have the command at all.
 
-## ⚠️ And `coolms:install` reports success having created nothing
+## !! And `coolms:install` reports success having created nothing
 
 The run above printed two empty sections -- "VFS structure", "Module data" --
 and then:

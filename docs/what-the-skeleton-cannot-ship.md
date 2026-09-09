@@ -2,7 +2,7 @@
 
 Measured 2026-09-03 against the CoolMS application tree.
 
-⚠️ **That tree is not public, so this is the one page in this repository whose
+!! **That tree is not public, so this is the one page in this repository whose
 numbers you cannot check for yourself.** That is why it carries a date and the
 rest of the repository's claims do not: a date belongs on what a reader cannot
 verify, and everything else here should give you the file or the command
@@ -47,7 +47,7 @@ narrowed to those consumed as a constructor argument (**27**), narrowed to
 those with no implementing class anywhere in the installed set. Four. None
 is optional and none has a null default.
 
-⚠️ **Measured against `vendor/`, not against `backend/packages/`.** The first
+!! **Measured against `vendor/`, not against `backend/packages/`.** The first
 run of this sweep used the working tree and reported **five**, adding a
 `ModuleNavigationRemoverInterface` implemented by `src/Navi`. That interface
 does not exist in the published `coolms/core` at all, and the published
@@ -67,7 +67,7 @@ that the application resolves those packages through `path` repositories,
 so it has never once run against the versions its own `composer.json`
 names. Nothing here would have surfaced any other way.
 
-## ⚠️ How hard a blocker each one is -- measured, because the wording was too strong
+## !! How hard a blocker each one is -- measured, because the wording was too strong
 
 An earlier draft of this page said `coolms/entity` "cannot compile a
 container in any application that is not CoolMS". That was too strong, and
@@ -84,7 +84,7 @@ wording. Removing the stand-ins one at a time settles it:
 | `HashedVisitorReference` only | compiles |
 | the `FieldMetadataSourceInterface` half of `NoRuntimeFields` | compiles |
 
-⚠️ **And the answer moved the same day.** Those runs were made against
+!! **And the answer moved the same day.** Those runs were made against
 the published set as it stood at 2.0.0-alpha1. Releasing `coolms/core`
 and `coolms/core-bundle` 2.0.0-alpha2 added
 `ModuleNavigationRemoverInterface` and a consumer that requires it, so
@@ -112,7 +112,7 @@ The honest statement is therefore: **the published packages do stand up in
 an application that is not CoolMS -- after the consumer writes one class.**
 That is a real defect and a much smaller one than "they do not work".
 
-⚠️ And the documentation is better than assumed: `coolms/entity`'s README
+!! And the documentation is better than assumed: `coolms/entity`'s README
 carries a **Port table** naming `FieldSchemaSourceInterface`,
 `FieldMetadataSourceInterface` and the optional contributor, with
 "typically implemented by the field-management module" against each. What it
@@ -150,7 +150,7 @@ booting, and the failure names a missing class rather than a missing dependency
 the platform has met before, in `symfony/config` under the themes and
 `phpdocumentor/reflection-docblock` under the OpenAPI document.
 
-⚠️ **Nothing will catch it.** The publish guard's `frameworks` rule is exactly
+!! **Nothing will catch it.** The publish guard's `frameworks` rule is exactly
 this check, and it is disabled for this repository by the `template` intent --
 correctly, because a template *is* the application and legitimately names the
 frameworks it runs on. The relaxation is right and it means this particular
