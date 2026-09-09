@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e434ba16cbec85ea36fee1f2aa44e18e",
+    "content-hash": "a33490add27c86d5c0faee60f3329be8",
     "packages": [
         {
             "name": "api-platform/core",
@@ -303,19 +303,20 @@
         },
         {
             "name": "coolms/core",
-            "version": "v2.0.0-alpha2",
+            "version": "v2.0.0-alpha3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/core.git",
-                "reference": "eef1053d5b3f66a20aaf676e2db0446671e00d0a"
+                "reference": "27e2b6a57abcc40f4649de9b3865bbcdad70a6c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/core/zipball/eef1053d5b3f66a20aaf676e2db0446671e00d0a",
-                "reference": "eef1053d5b3f66a20aaf676e2db0446671e00d0a",
+                "url": "https://api.github.com/repos/coolms/core/zipball/27e2b6a57abcc40f4649de9b3865bbcdad70a6c1",
+                "reference": "27e2b6a57abcc40f4649de9b3865bbcdad70a6c1",
                 "shasum": ""
             },
             "require": {
+                "coolms/rql": "^1.0",
                 "php": "^8.5",
                 "symfony/messenger": "^8.0",
                 "symfony/serializer": "^8.0",
@@ -356,29 +357,102 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/core/issues",
-                "source": "https://github.com/coolms/core/tree/v2.0.0-alpha2"
+                "source": "https://github.com/coolms/core/tree/v2.0.0-alpha3"
             },
-            "time": "2026-09-03T18:49:30+00:00"
+            "time": "2026-09-09T20:18:47+00:00"
         },
         {
-            "name": "coolms/core-bundle",
-            "version": "v2.0.0-alpha4",
+            "name": "coolms/core-application",
+            "version": "v2.0.0-alpha2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/coolms/core-bundle.git",
-                "reference": "77ea2543d1153728ebc9a38371906be3f38fb20d"
+                "url": "https://github.com/coolms/core-application.git",
+                "reference": "b87ed5cf9395e926aafcf95c7524a558abb3b948"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/core-bundle/zipball/77ea2543d1153728ebc9a38371906be3f38fb20d",
-                "reference": "77ea2543d1153728ebc9a38371906be3f38fb20d",
+                "url": "https://api.github.com/repos/coolms/core-application/zipball/b87ed5cf9395e926aafcf95c7524a558abb3b948",
+                "reference": "b87ed5cf9395e926aafcf95c7524a558abb3b948",
+                "shasum": ""
+            },
+            "require": {
+                "coolms/core": "^2.0",
+                "coolms/core-persistence-implementation": "^2.0",
+                "ext-mbstring": "*",
+                "ext-zip": "*",
+                "php": "^8.5",
+                "psr/clock": "^1.0",
+                "psr/log": "^3.0",
+                "symfony/clock": "^8.0",
+                "symfony/dependency-injection": "^8.0",
+                "symfony/filesystem": "^8.0",
+                "symfony/routing": "^8.0",
+                "symfony/security-core": "^8.0",
+                "symfony/string": "^8.0",
+                "symfony/translation-contracts": "^3.4.2",
+                "symfony/validator": "^8.0",
+                "symfony/yaml": "^8.0"
+            },
+            "require-dev": {
+                "coolms/core-doctrine": "^2.0",
+                "phpunit/phpunit": "^12.5"
+            },
+            "suggest": {
+                "coolms/core-doctrine": "Doctrine ORM/DBAL adapter -- the persistence implementation this module needs"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CoolMS\\Core\\Application\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Popov"
+                }
+            ],
+            "description": "Platform composition for coolms/core: the application services that wire the kernel contracts to whatever implements them -- config loading, backup/restore, the API manifest, outbox dispatch, retention and label resolution",
+            "keywords": [
+                "application",
+                "cms",
+                "coolms",
+                "module",
+                "platform"
+            ],
+            "support": {
+                "issues": "https://github.com/coolms/core-application/issues",
+                "source": "https://github.com/coolms/core-application/tree/v2.0.0-alpha2"
+            },
+            "time": "2026-09-09T20:19:15+00:00"
+        },
+        {
+            "name": "coolms/core-bundle",
+            "version": "v2.0.0-alpha5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coolms/core-bundle.git",
+                "reference": "aff67a9863a2a1afb62edbbeb8899b186cdcc319"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coolms/core-bundle/zipball/aff67a9863a2a1afb62edbbeb8899b186cdcc319",
+                "reference": "aff67a9863a2a1afb62edbbeb8899b186cdcc319",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^4.2",
                 "composer-runtime-api": "^2.0",
                 "coolms/core": "^2.0",
-                "coolms/core-module": "^2.0",
+                "coolms/core-application": "^2.0",
                 "coolms/dtmpl": "^2.0",
                 "coolms/rql": "^1.0",
                 "ext-mbstring": "*",
@@ -422,7 +496,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "CoolMS\\CoreBundle\\": "src/"
+                    "CoolMS\\Core\\Bundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -444,22 +518,22 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/core-bundle/issues",
-                "source": "https://github.com/coolms/core-bundle/tree/v2.0.0-alpha4"
+                "source": "https://github.com/coolms/core-bundle/tree/v2.0.0-alpha5"
             },
-            "time": "2026-09-07T14:59:06+00:00"
+            "time": "2026-09-09T20:19:34+00:00"
         },
         {
             "name": "coolms/core-doctrine",
-            "version": "v2.0.0-alpha1",
+            "version": "v2.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/core-doctrine.git",
-                "reference": "97feeaea9461d65014e0a6dd08be8f31b85ad983"
+                "reference": "d4b466264eccd6bd62d24ca2f42747b4a2ac9c26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/core-doctrine/zipball/97feeaea9461d65014e0a6dd08be8f31b85ad983",
-                "reference": "97feeaea9461d65014e0a6dd08be8f31b85ad983",
+                "url": "https://api.github.com/repos/coolms/core-doctrine/zipball/d4b466264eccd6bd62d24ca2f42747b4a2ac9c26",
+                "reference": "d4b466264eccd6bd62d24ca2f42747b4a2ac9c26",
                 "shasum": ""
             },
             "require": {
@@ -516,82 +590,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/core-doctrine/issues",
-                "source": "https://github.com/coolms/core-doctrine/tree/v2.0.0-alpha1"
+                "source": "https://github.com/coolms/core-doctrine/tree/v2.0.0-alpha2"
             },
-            "time": "2026-09-01T18:12:09+00:00"
-        },
-        {
-            "name": "coolms/core-module",
-            "version": "v2.0.0-alpha1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/coolms/core-module.git",
-                "reference": "5d2d02c4cb18e10773579ba3e4484eabe39dadd8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/coolms/core-module/zipball/5d2d02c4cb18e10773579ba3e4484eabe39dadd8",
-                "reference": "5d2d02c4cb18e10773579ba3e4484eabe39dadd8",
-                "shasum": ""
-            },
-            "require": {
-                "coolms/core": "^2.0",
-                "coolms/core-persistence-implementation": "^2.0",
-                "ext-mbstring": "*",
-                "ext-zip": "*",
-                "php": "^8.5",
-                "psr/clock": "^1.0",
-                "psr/log": "^3.0",
-                "symfony/clock": "^8.0",
-                "symfony/dependency-injection": "^8.0",
-                "symfony/filesystem": "^8.0",
-                "symfony/routing": "^8.0",
-                "symfony/security-core": "^8.0",
-                "symfony/string": "^8.0",
-                "symfony/translation-contracts": "^3.4.2",
-                "symfony/validator": "^8.0",
-                "symfony/yaml": "^8.0"
-            },
-            "require-dev": {
-                "coolms/core-doctrine": "^2.0",
-                "phpunit/phpunit": "^12.5"
-            },
-            "suggest": {
-                "coolms/core-doctrine": "Doctrine ORM/DBAL adapter -- the persistence implementation this module needs"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "CoolMS\\CoreModule\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dmitry Popov"
-                }
-            ],
-            "description": "Platform composition for coolms/core: the application services that wire the kernel contracts to whatever implements them -- config loading, backup/restore, the API manifest, outbox dispatch, retention and label resolution",
-            "keywords": [
-                "application",
-                "cms",
-                "coolms",
-                "module",
-                "platform"
-            ],
-            "support": {
-                "issues": "https://github.com/coolms/core-module/issues",
-                "source": "https://github.com/coolms/core-module/tree/v2.0.0-alpha1"
-            },
-            "time": "2026-09-01T18:12:18+00:00"
+            "time": "2026-09-09T20:18:52+00:00"
         },
         {
             "name": "coolms/dtmpl",
@@ -649,16 +650,16 @@
         },
         {
             "name": "coolms/dtmpl-bundle",
-            "version": "v2.0.0",
+            "version": "v2.0.0-alpha1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/dtmpl-bundle.git",
-                "reference": "a966dedb95dad8a794a31b3db5db8f9f1d13bca5"
+                "reference": "16b2c44ed8194c083980f18f334cfbe88febbca6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/dtmpl-bundle/zipball/a966dedb95dad8a794a31b3db5db8f9f1d13bca5",
-                "reference": "a966dedb95dad8a794a31b3db5db8f9f1d13bca5",
+                "url": "https://api.github.com/repos/coolms/dtmpl-bundle/zipball/16b2c44ed8194c083980f18f334cfbe88febbca6",
+                "reference": "16b2c44ed8194c083980f18f334cfbe88febbca6",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +681,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "CoolMS\\DtmplBundle\\": "src/"
+                    "CoolMS\\Dtmpl\\Bundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -702,22 +703,22 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/dtmpl-bundle/issues",
-                "source": "https://github.com/coolms/dtmpl-bundle/tree/v2.0.0"
+                "source": "https://github.com/coolms/dtmpl-bundle/tree/v2.0.0-alpha1"
             },
-            "time": "2026-08-26T19:18:41+00:00"
+            "time": "2026-09-09T20:19:52+00:00"
         },
         {
             "name": "coolms/entity",
-            "version": "v2.0.0-alpha1",
+            "version": "v2.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/entity.git",
-                "reference": "fad90d003f05a57a4d5a3f0caa931bafdfe6ef84"
+                "reference": "bef5757acf623e27bbe0667a5fc833012a216a3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/entity/zipball/fad90d003f05a57a4d5a3f0caa931bafdfe6ef84",
-                "reference": "fad90d003f05a57a4d5a3f0caa931bafdfe6ef84",
+                "url": "https://api.github.com/repos/coolms/entity/zipball/bef5757acf623e27bbe0667a5fc833012a216a3c",
+                "reference": "bef5757acf623e27bbe0667a5fc833012a216a3c",
                 "shasum": ""
             },
             "require": {
@@ -761,22 +762,85 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/entity/issues",
-                "source": "https://github.com/coolms/entity/tree/v2.0.0-alpha1"
+                "source": "https://github.com/coolms/entity/tree/v2.0.0-alpha2"
             },
-            "time": "2026-09-01T18:12:13+00:00"
+            "time": "2026-09-09T20:18:58+00:00"
         },
         {
-            "name": "coolms/entity-bundle",
+            "name": "coolms/entity-application",
             "version": "v2.0.0-alpha2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/coolms/entity-bundle.git",
-                "reference": "9b9b3c1faa97d622f0b78ad92a888c1c575718dd"
+                "url": "https://github.com/coolms/entity-application.git",
+                "reference": "1824b8ab2571f9f52cbbfc55ac44bd77e6c2c25b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/entity-bundle/zipball/9b9b3c1faa97d622f0b78ad92a888c1c575718dd",
-                "reference": "9b9b3c1faa97d622f0b78ad92a888c1c575718dd",
+                "url": "https://api.github.com/repos/coolms/entity-application/zipball/1824b8ab2571f9f52cbbfc55ac44bd77e6c2c25b",
+                "reference": "1824b8ab2571f9f52cbbfc55ac44bd77e6c2c25b",
+                "shasum": ""
+            },
+            "require": {
+                "coolms/core": "^2.0",
+                "coolms/dtmpl": "^2.0",
+                "coolms/entity": "^2.0",
+                "coolms/entity-persistence-implementation": "^2.0",
+                "coolms/rql": "^1.0",
+                "php": "^8.5",
+                "symfony/dependency-injection": "^8.0",
+                "symfony/serializer": "^8.0",
+                "symfony/uid": "^8.0"
+            },
+            "require-dev": {
+                "coolms/entity-doctrine": "^2.0",
+                "phpunit/phpunit": "^12.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CoolMS\\Entity\\Application\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Popov"
+                }
+            ],
+            "description": "Platform composition layer over coolms/entity: reflection field extraction, the tagged repository registry, the extras-flattening normalizer and the entity:find widget renderers",
+            "keywords": [
+                "Extras",
+                "coolms",
+                "entity",
+                "serializer",
+                "widget"
+            ],
+            "support": {
+                "issues": "https://github.com/coolms/entity-application/issues",
+                "source": "https://github.com/coolms/entity-application/tree/v2.0.0-alpha2"
+            },
+            "time": "2026-09-09T20:19:40+00:00"
+        },
+        {
+            "name": "coolms/entity-bundle",
+            "version": "v2.0.0-alpha3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coolms/entity-bundle.git",
+                "reference": "1dd4001953d0238b7a54c19a2dab12bcc63bd884"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coolms/entity-bundle/zipball/1dd4001953d0238b7a54c19a2dab12bcc63bd884",
+                "reference": "1dd4001953d0238b7a54c19a2dab12bcc63bd884",
                 "shasum": ""
             },
             "require": {
@@ -784,7 +848,7 @@
                 "coolms/core": "^2.0",
                 "coolms/core-bundle": "^2.0",
                 "coolms/entity": "^2.0",
-                "coolms/entity-module": "^2.0",
+                "coolms/entity-application": "^2.0",
                 "php": "^8.5",
                 "symfony/config": "^8.0",
                 "symfony/dependency-injection": "^8.0",
@@ -808,7 +872,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "CoolMS\\EntityBundle\\": "src/"
+                    "CoolMS\\Entity\\Bundle\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -830,22 +894,22 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/entity-bundle/issues",
-                "source": "https://github.com/coolms/entity-bundle/tree/v2.0.0-alpha2"
+                "source": "https://github.com/coolms/entity-bundle/tree/v2.0.0-alpha3"
             },
-            "time": "2026-09-03T18:44:25+00:00"
+            "time": "2026-09-09T20:19:46+00:00"
         },
         {
             "name": "coolms/entity-doctrine",
-            "version": "v2.0.0-alpha1",
+            "version": "v2.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/entity-doctrine.git",
-                "reference": "8a15967d3782347f546c8e0c8ca7bad25c73f676"
+                "reference": "6f029f235f678ef2682cd52936a3adbeac8ba990"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/entity-doctrine/zipball/8a15967d3782347f546c8e0c8ca7bad25c73f676",
-                "reference": "8a15967d3782347f546c8e0c8ca7bad25c73f676",
+                "url": "https://api.github.com/repos/coolms/entity-doctrine/zipball/6f029f235f678ef2682cd52936a3adbeac8ba990",
+                "reference": "6f029f235f678ef2682cd52936a3adbeac8ba990",
                 "shasum": ""
             },
             "require": {
@@ -905,72 +969,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/entity-doctrine/issues",
-                "source": "https://github.com/coolms/entity-doctrine/tree/v2.0.0-alpha1"
+                "source": "https://github.com/coolms/entity-doctrine/tree/v2.0.0-alpha2"
             },
-            "time": "2026-09-01T18:12:23+00:00"
-        },
-        {
-            "name": "coolms/entity-module",
-            "version": "v2.0.0-alpha1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/coolms/entity-module.git",
-                "reference": "2910620ff737f0ba1af79cc98871ba7396762a7b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/coolms/entity-module/zipball/2910620ff737f0ba1af79cc98871ba7396762a7b",
-                "reference": "2910620ff737f0ba1af79cc98871ba7396762a7b",
-                "shasum": ""
-            },
-            "require": {
-                "coolms/core": "^2.0",
-                "coolms/dtmpl": "^2.0",
-                "coolms/entity": "^2.0",
-                "coolms/entity-persistence-implementation": "^2.0",
-                "coolms/rql": "^1.0",
-                "php": "^8.5",
-                "symfony/dependency-injection": "^8.0",
-                "symfony/serializer": "^8.0",
-                "symfony/uid": "^8.0"
-            },
-            "require-dev": {
-                "coolms/entity-doctrine": "^2.0",
-                "phpunit/phpunit": "^12.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "CoolMS\\EntityModule\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dmitry Popov"
-                }
-            ],
-            "description": "Platform composition layer over coolms/entity: reflection field extraction, the tagged repository registry, the extras-flattening normalizer and the entity:find widget renderers",
-            "keywords": [
-                "Extras",
-                "coolms",
-                "entity",
-                "serializer",
-                "widget"
-            ],
-            "support": {
-                "issues": "https://github.com/coolms/entity-module/issues",
-                "source": "https://github.com/coolms/entity-module/tree/v2.0.0-alpha1"
-            },
-            "time": "2026-09-01T18:12:33+00:00"
+            "time": "2026-09-09T20:19:20+00:00"
         },
         {
             "name": "coolms/rql",
@@ -1080,16 +1081,16 @@
         },
         {
             "name": "coolms/theme-bootstrap",
-            "version": "v2.0.0-alpha3",
+            "version": "v2.0.0-alpha4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/theme-bootstrap.git",
-                "reference": "111308c4a4a209b75f1976a503bc2f3ab1f11613"
+                "reference": "f03345260d2cb2d031f3d69febcb8e7fb504a732"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/theme-bootstrap/zipball/111308c4a4a209b75f1976a503bc2f3ab1f11613",
-                "reference": "111308c4a4a209b75f1976a503bc2f3ab1f11613",
+                "url": "https://api.github.com/repos/coolms/theme-bootstrap/zipball/f03345260d2cb2d031f3d69febcb8e7fb504a732",
+                "reference": "f03345260d2cb2d031f3d69febcb8e7fb504a732",
                 "shasum": ""
             },
             "require": {
@@ -1127,22 +1128,22 @@
             "description": "Bootstrap theme overlay for CoolMS -- adds Bootstrap classes to the base form and nav templates",
             "support": {
                 "issues": "https://github.com/coolms/theme-bootstrap/issues",
-                "source": "https://github.com/coolms/theme-bootstrap/tree/v2.0.0-alpha3"
+                "source": "https://github.com/coolms/theme-bootstrap/tree/v2.0.0-alpha4"
             },
-            "time": "2026-09-03T19:55:35+00:00"
+            "time": "2026-09-09T20:19:09+00:00"
         },
         {
             "name": "coolms/theme-default",
-            "version": "v2.0.0-alpha3",
+            "version": "v2.0.0-alpha4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/theme-default.git",
-                "reference": "2941afad7fad7aea955151218ffa8ef417a8c404"
+                "reference": "26b868643ce4c9931d73d9142b3c88c56e9454c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/theme-default/zipball/2941afad7fad7aea955151218ffa8ef417a8c404",
-                "reference": "2941afad7fad7aea955151218ffa8ef417a8c404",
+                "url": "https://api.github.com/repos/coolms/theme-default/zipball/26b868643ce4c9931d73d9142b3c88c56e9454c6",
+                "reference": "26b868643ce4c9931d73d9142b3c88c56e9454c6",
                 "shasum": ""
             },
             "require": {
@@ -1180,9 +1181,9 @@
             "description": "The default CoolMS theme: Bootstrap styling over server-rendered DTMPL templates",
             "support": {
                 "issues": "https://github.com/coolms/theme-default/issues",
-                "source": "https://github.com/coolms/theme-default/tree/v2.0.0-alpha3"
+                "source": "https://github.com/coolms/theme-default/tree/v2.0.0-alpha4"
             },
-            "time": "2026-09-03T20:07:09+00:00"
+            "time": "2026-09-09T20:19:27+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -7048,6 +7049,7 @@
         "coolms/core": 15,
         "coolms/core-bundle": 15,
         "coolms/core-doctrine": 15,
+        "coolms/dtmpl-bundle": 15,
         "coolms/entity": 15,
         "coolms/entity-bundle": 15,
         "coolms/entity-doctrine": 15,

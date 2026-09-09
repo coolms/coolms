@@ -20,10 +20,10 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     CoolMS\Rql\Doctrine\RqlDoctrineBundle::class => ['all' => true],
-    CoolMS\CoreBundle\CoreBundle::class => ['all' => true],
+    CoolMS\Core\Bundle\CoreBundle::class => ['all' => true],
     CoolMS\Core\Doctrine\CoreDoctrineBundle::class => ['all' => true],
-    CoolMS\EntityBundle\EntityBundle::class => ['all' => true],
-    CoolMS\DtmplBundle\DtmplBundle::class => ['all' => true],
+    CoolMS\Entity\Bundle\EntityBundle::class => ['all' => true],
+    CoolMS\Dtmpl\Bundle\DtmplBundle::class => ['all' => true],
     CoolMS\ThemeBootstrap\ThemeBootstrapBundle::class => ['all' => true],
     CoolMS\ThemeDefault\ThemeDefaultBundle::class => ['all' => true],
 ];

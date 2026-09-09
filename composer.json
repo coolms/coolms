@@ -8,7 +8,7 @@
         "coolms/core-bundle": "^2.0@alpha",
         "coolms/core-doctrine": "^2.0@alpha",
         "coolms/dtmpl": "^2.0",
-        "coolms/dtmpl-bundle": "^2.0",
+        "coolms/dtmpl-bundle": "^2.0@alpha",
         "coolms/entity": "^2.0@alpha",
         "coolms/entity-bundle": "^2.0@alpha",
         "coolms/entity-doctrine": "^2.0@alpha",
