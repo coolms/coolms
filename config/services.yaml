@@ -35,10 +35,10 @@ services:
             - '%kernel.project_dir%/vendor/coolms/core/src/Registry/'
             - '%kernel.project_dir%/vendor/coolms/core/src/Identity/EntityWalkUserGroupResolver.php'
 
-    CoolMS\CoreModule\:
-        resource: '%kernel.project_dir%/vendor/coolms/core-module/src/'
+    CoolMS\CoreApp\:
+        resource: '%kernel.project_dir%/vendor/coolms/core-app/src/'
         exclude:
-            - '%kernel.project_dir%/vendor/coolms/core-module/src/Config/ChainedConfigWriter.php'
+            - '%kernel.project_dir%/vendor/coolms/core-app/src/Config/ChainedConfigWriter.php'
 
     CoolMS\Core\Doctrine\:
         resource: '%kernel.project_dir%/vendor/coolms/core-doctrine/src/'
@@ -57,8 +57,8 @@ services:
         exclude:
             - '%kernel.project_dir%/vendor/coolms/entity/src/ValueObject/'
 
-    CoolMS\EntityModule\:
-        resource: '%kernel.project_dir%/vendor/coolms/entity-module/src/'
+    CoolMS\EntityApp\:
+        resource: '%kernel.project_dir%/vendor/coolms/entity-app/src/'
 
     CoolMS\Entity\Doctrine\:
         resource: '%kernel.project_dir%/vendor/coolms/entity-doctrine/src/'
