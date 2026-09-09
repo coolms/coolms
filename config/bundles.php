@@ -23,7 +23,7 @@ return [
     CoolMS\CoreBundle\CoreBundle::class => ['all' => true],
     CoolMS\Core\Doctrine\CoreDoctrineBundle::class => ['all' => true],
     CoolMS\EntityBundle\EntityBundle::class => ['all' => true],
-    CoolMS\DtmplBundle\DtmplBundle::class => ['all' => true],
+    CoolMS\Dtmpl\Bundle\DtmplBundle::class => ['all' => true],
     CoolMS\ThemeBootstrap\ThemeBootstrapBundle::class => ['all' => true],
     CoolMS\ThemeDefault\ThemeDefaultBundle::class => ['all' => true],
 ];
