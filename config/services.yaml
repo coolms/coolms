@@ -40,21 +40,24 @@ services:
     # name. Removing the requirement did not remove the package, and the wiring
     # has to name what an install actually contains.
     #
-    # `coolms/core-app` was never published under that name. Pointing at it made
-    # `cache:clear` fail during `composer install`, which is three steps before
-    # anything that checks a manifest -- so the whole documented install stopped
-    # at step 3 and every later assertion was skipped rather than run.
-    CoolMS\CoreModule\:
-        resource: '%kernel.project_dir%/vendor/coolms/core-module/src/'
+    # Which name that is has changed twice, and getting it wrong is expensive:
+    # `coolms/core-app` was an intermediate spelling never published at all, and
+    # pointing at it made `cache:clear` fail during `composer install` -- three
+    # steps before anything that checks a manifest, so the whole documented
+    # install stopped at step 3 and every later assertion was skipped rather
+    # than run. The published name is `coolms/core-application`; the older
+    # `coolms/core-module` is abandoned and points at it.
+    CoolMS\Core\Application\:
+        resource: '%kernel.project_dir%/vendor/coolms/core-application/src/'
         exclude:
-            - '%kernel.project_dir%/vendor/coolms/core-module/src/Config/ChainedConfigWriter.php'
+            - '%kernel.project_dir%/vendor/coolms/core-application/src/Config/ChainedConfigWriter.php'
 
     CoolMS\Core\Doctrine\:
         resource: '%kernel.project_dir%/vendor/coolms/core-doctrine/src/'
         exclude:
             - '%kernel.project_dir%/vendor/coolms/core-doctrine/src/mapping/'
 
-    CoolMS\CoreBundle\:
+    CoolMS\Core\Bundle\:
         resource: '%kernel.project_dir%/vendor/coolms/core-bundle/src/'
         exclude:
             - '%kernel.project_dir%/vendor/coolms/core-bundle/src/CoreBundle.php'
@@ -66,17 +69,18 @@ services:
         exclude:
             - '%kernel.project_dir%/vendor/coolms/entity/src/ValueObject/'
 
-    # Same as the core tier above: required by the published entity-bundle,
-    # not by this manifest, and published only under its `-module` name.
-    CoolMS\EntityModule\:
-        resource: '%kernel.project_dir%/vendor/coolms/entity-module/src/'
+    # Same as the core tier above: required by the published entity-bundle, not
+    # by this manifest. `coolms/entity-module` is abandoned in favour of the
+    # name below.
+    CoolMS\Entity\Application\:
+        resource: '%kernel.project_dir%/vendor/coolms/entity-application/src/'
 
     CoolMS\Entity\Doctrine\:
         resource: '%kernel.project_dir%/vendor/coolms/entity-doctrine/src/'
         exclude:
             - '%kernel.project_dir%/vendor/coolms/entity-doctrine/src/Tree/'
 
-    CoolMS\EntityBundle\:
+    CoolMS\Entity\Bundle\:
         resource: '%kernel.project_dir%/vendor/coolms/entity-bundle/src/'
         exclude:
             - '%kernel.project_dir%/vendor/coolms/entity-bundle/src/EntityBundle.php'
