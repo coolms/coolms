@@ -83,6 +83,35 @@ install is the exact set this repository was last tested against -- read it ther
 rather than trusting a version written into prose, which is how the previous
 version of this section went stale.
 
+## Three commands run only when you run them
+
+The foundation ships three commands that are meant to recur, and in this
+skeleton every one of them is **manual** -- a crontab line you install, or
+nothing:
+
+```
+*/1 * * * *  cd /var/www && php bin/console coolms:outbox:relay --batch=100 >> var/log/outbox-relay.log 2>&1
+30 3 * * *   cd /var/www && php bin/console coolms:retention:prune >> var/log/retention.log 2>&1
+45 3 * * *   cd /var/www && php bin/console coolms:outbox:prune >> var/log/retention.log 2>&1
+```
+
+Why manual: in the CoolMS application these are schedule rows dispatched by a
+one-minute tick, seeded at install by the module that owns each one, and the
+outbox relay is a worker the compose stack runs continuously. The Scheduler
+module that makes rows out of them is **not published** -- it lives in the
+application tree, not in any package -- so a clone of this skeleton has no
+`coolms:scheduler:run`, no schedules table and no seeded row. Until the
+Scheduler ships as a package, "scheduled" is a property of the application, not
+of the foundation, and here the three are exactly as scheduled as your crontab.
+
+Measured on a clean clone (2026-09-16): `bin/console list` shows the three
+commands and no scheduler; the retention sweep sees the two Core pruners
+(processed inbox records after 30 days, delivered outbox rows after 7); the
+relay publishes whatever `coolms_outbox` holds, which without a producer is
+nothing. `coolms:outbox:relay --status` (core-bundle, once released) prints the
+number that should be zero while a relay runs: unpublished rows older than a
+minute.
+
 ## Why the lock files are committed
 
 Without a committed `symfony.lock`, `composer install` re-ran every Flex recipe
