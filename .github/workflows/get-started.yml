@@ -165,6 +165,33 @@ jobs:
           fi
           echo "distinct responses"
 
+      # The profiler is a developer's tool. Its pages keep each request's headers, body and environment, so a
+      # production install must not have one: /_profiler is not found, no response names a profile, and no
+      # page carries the toolbar. The app takes its environment when its container is made, so the switch to
+      # production makes it again.
+      - name: In production, no profiler answers and no page carries one
+        run: |
+          sed -i 's/^APP_ENV=.*/APP_ENV=prod/; s/^APP_DEBUG=.*/APP_DEBUG=0/' .env
+          docker compose up -d --force-recreate app
+          docker compose exec -T app php bin/console cache:clear --no-interaction
+          docker compose exec -T app sh -c 'echo "APP_ENV=$APP_ENV APP_DEBUG=$APP_DEBUG"'
+
+          profiler_code="$(curl -s -o /tmp/profiler -w '%{http_code}' http://localhost:8080/_profiler/)"
+          curl -s -D /tmp/root-headers -o /tmp/root http://localhost:8080/
+          curl -s -D /tmp/api-headers -o /dev/null http://localhost:8080/api
+          echo "/_profiler/=$profiler_code"
+
+          [ "$profiler_code" = "404" ] || { echo "/_profiler/ answered $profiler_code in production"; exit 1; }
+          if grep -qi '^x-debug-token' /tmp/root-headers /tmp/api-headers; then
+            echo "a response names a profile (X-Debug-Token) in production"
+            exit 1
+          fi
+          if grep -qi 'sf-toolbar' /tmp/root /tmp/profiler; then
+            echo "a page carries the profiler's toolbar in production"
+            exit 1
+          fi
+          echo "no profiler in production"
+
       - name: Container logs on failure
         if: failure()
         run: docker compose logs --tail=200
