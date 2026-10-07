@@ -3,3 +3,9 @@ framework:
     session: true
     php_errors:
         log: true
+
+when@prod:
+    framework:
+        profiler:
+            enabled: true
+            collect: true
