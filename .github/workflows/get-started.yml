@@ -181,15 +181,17 @@ jobs:
           curl -s -D /tmp/api-headers -o /dev/null http://localhost:8080/api
           echo "/_profiler/=$profiler_code"
 
-          [ "$profiler_code" = "404" ] || { echo "/_profiler/ answered $profiler_code in production"; exit 1; }
+          # Each of the three is read and reported, so a failure names every one that does not hold.
+          failed=0
+          if [ "$profiler_code" = "404" ]; then echo "ok: /_profiler/ is not found"
+          else echo "FAILED: /_profiler/ answered $profiler_code"; failed=1; fi
           if grep -qi '^x-debug-token' /tmp/root-headers /tmp/api-headers; then
-            echo "a response names a profile (X-Debug-Token) in production"
-            exit 1
-          fi
+            echo "FAILED: a response names a profile (X-Debug-Token)"; failed=1
+          else echo "ok: no response names a profile"; fi
           if grep -qi 'sf-toolbar' /tmp/root /tmp/profiler; then
-            echo "a page carries the profiler's toolbar in production"
-            exit 1
-          fi
+            echo "FAILED: a page carries the profiler's toolbar"; failed=1
+          else echo "ok: no page carries the toolbar"; fi
+          [ "$failed" = 0 ] || exit 1
           echo "no profiler in production"
 
       - name: Container logs on failure
