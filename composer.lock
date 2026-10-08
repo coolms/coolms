@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1824144537ca2aa8709c66c6f934c85e",
+    "content-hash": "0be6f82a382c731886294eefc3da90d7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -596,16 +596,16 @@
         },
         {
             "name": "coolms/dtmpl",
-            "version": "v2.0.0",
+            "version": "v2.3.0-alpha1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/dtmpl.git",
-                "reference": "37596fa6701f085dfb0e6aeb638f2f45bb8e8214"
+                "reference": "a36b03f75580f7984d9263551ff2895cdb33861b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/dtmpl/zipball/37596fa6701f085dfb0e6aeb638f2f45bb8e8214",
-                "reference": "37596fa6701f085dfb0e6aeb638f2f45bb8e8214",
+                "url": "https://api.github.com/repos/coolms/dtmpl/zipball/a36b03f75580f7984d9263551ff2895cdb33861b",
+                "reference": "a36b03f75580f7984d9263551ff2895cdb33861b",
                 "shasum": ""
             },
             "require": {
@@ -619,6 +619,39 @@
                 "symfony/translation": "^8.0"
             },
             "type": "library",
+            "extra": {
+                "coolms": {
+                    "docs": {
+                        "index": "README.md",
+                        "pages": [
+                            {
+                                "path": "docs/language.md",
+                                "order": 10,
+                                "title": "The DTMPL language"
+                            },
+                            {
+                                "path": "docs/filters.md",
+                                "order": 20,
+                                "title": "Filters"
+                            },
+                            {
+                                "path": "docs/loaders.md",
+                                "order": 30,
+                                "title": "Loaders"
+                            },
+                            {
+                                "path": "docs/widgets.md",
+                                "order": 40,
+                                "title": "Widgets"
+                            }
+                        ],
+                        "section": "modules"
+                    }
+                },
+                "branch-alias": {
+                    "dev-develop": "2.2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "CoolMS\\Dtmpl\\": "src/"
@@ -644,9 +677,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/dtmpl/issues",
-                "source": "https://github.com/coolms/dtmpl/tree/v2.0.0"
+                "source": "https://github.com/coolms/dtmpl"
             },
-            "time": "2026-08-26T19:14:42+00:00"
+            "time": "2026-10-08T05:40:49+00:00"
         },
         {
             "name": "coolms/dtmpl-bundle",
@@ -831,22 +864,23 @@
         },
         {
             "name": "coolms/entity-bundle",
-            "version": "v2.0.0-alpha3",
+            "version": "v2.0.0-alpha5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coolms/entity-bundle.git",
-                "reference": "1dd4001953d0238b7a54c19a2dab12bcc63bd884"
+                "reference": "47b40a67fef434f6e6c6573f8aacc82817f94e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coolms/entity-bundle/zipball/1dd4001953d0238b7a54c19a2dab12bcc63bd884",
-                "reference": "1dd4001953d0238b7a54c19a2dab12bcc63bd884",
+                "url": "https://api.github.com/repos/coolms/entity-bundle/zipball/47b40a67fef434f6e6c6573f8aacc82817f94e41",
+                "reference": "47b40a67fef434f6e6c6573f8aacc82817f94e41",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^4.2",
                 "coolms/core": "^2.0",
                 "coolms/core-bundle": "^2.0",
+                "coolms/dtmpl": "^2.2",
                 "coolms/entity": "^2.0",
                 "coolms/entity-application": "^2.0",
                 "php": "^8.5",
@@ -894,9 +928,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coolms/entity-bundle/issues",
-                "source": "https://github.com/coolms/entity-bundle/tree/v2.0.0-alpha3"
+                "source": "https://github.com/coolms/entity-bundle"
             },
-            "time": "2026-09-09T20:19:46+00:00"
+            "time": "2026-10-08T21:24:26+00:00"
         },
         {
             "name": "coolms/entity-doctrine",
@@ -7049,9 +7083,9 @@
         "coolms/core": 15,
         "coolms/core-bundle": 15,
         "coolms/core-doctrine": 15,
+        "coolms/dtmpl": 15,
         "coolms/dtmpl-bundle": 15,
         "coolms/entity": 15,
-        "coolms/entity-bundle": 15,
         "coolms/entity-doctrine": 15,
         "coolms/theme-default": 15
     },
