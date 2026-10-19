@@ -1,7 +1,7 @@
 # CoolMS
 
 CoolMS is an open-core platform for content, business processes and team collaboration, built on PHP 8.5 and Symfony 8.
-It is in alpha: its packages are published as pre-releases, and this repository is the skeleton that installs them, not a release.
+The platform is in alpha: its packages are published as pre-releases, and this repository is the skeleton that installs them, not a release.
 
 Standalone libraries: [rql](https://github.com/coolms/rql) (filter, sort and paging query strings parsed into a typed AST) and [mime](https://github.com/coolms/mime) (a streaming MIME parser).
 
